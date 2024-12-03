@@ -33,9 +33,9 @@ const Navbar = () => {
             Search
           </button>
           {/* Signup Button */}
-          <Link to='/signup'></Link><button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500">
+          <Link to='/signup'><button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500">
             Sign Up
-          </button>
+          </button></Link>
         </div>
       </div>
     </nav>
