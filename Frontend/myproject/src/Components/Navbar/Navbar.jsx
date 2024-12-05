@@ -18,7 +18,7 @@ const Navbar = () => {
         {/* Navbar Links */}
         <div className="hidden md:flex space-x-6">
           <a href="/" className="hover:text-gray-400">Home</a>
-          <a href="#contact" className="hover:text-gray-400">Contact Us</a>
+          <a href="/contact" className="hover:text-gray-400">Contact Us</a>
         </div>
 
         {/* Search and Signup Section */}

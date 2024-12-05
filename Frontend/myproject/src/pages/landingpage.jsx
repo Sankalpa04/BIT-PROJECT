@@ -34,11 +34,11 @@ const LandingPage = () => {
           <div className="flex space-x-4 justify-center">
             <input
               type="date"
-              className="form-control text-black px-4 py-2 w-32 rounded-md shadow-lg"
+              className="form-control text-black px-3 py-2 w-36 rounded-md shadow-lg"
             />
             <input
               type="date"
-              className="form-control text-black px-4 py-2 w-32 rounded-md shadow-lg"
+              className="form-control text-black px-3 py-2 w-34 rounded-md shadow-lg"
             />
           </div>
           <div className="flex justify-center space-x-4 mt-4">

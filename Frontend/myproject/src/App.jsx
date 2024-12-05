@@ -7,6 +7,7 @@ import Signuppage from './pages/Signuppage.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LoginPage from './pages/Loginpage.jsx'
 import SignupPage from './pages/Signuppage.jsx'
+import ContactPage from './pages/ContactPage.jsx'
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
           <Routes>
             <Route path='/' element={<LandingPage/>}/>  
             <Route path='/login' element={<LoginPage/>}/>  
-            <Route path='/signup' element={<SignupPage/>}/>  
+            <Route path='/signup' element={<SignupPage/>}/>
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
         <Footer/>
     </BrowserRouter>
