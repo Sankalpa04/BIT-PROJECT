@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 const LandingPage = () => {
   const [hotels, setHotels] = useState([
-    { name: "Luxury Hotel", price: 120, img: "https://via.placeholder.com/300x200", description: "Starting at $120/night" },
-    { name: "Cozy Stay", price: 80, img: "https://via.placeholder.com/300x200", description: "Starting at $80/night" },
-    { name: "Beach Resort", price: 150, img: "https://via.placeholder.com/300x200", description: "Starting at $150/night" }
+    { name: "Luxury Hotel", price: 120, img: "https://www.luxsphere.co/wp-content/uploads/luxury-hotels-in-dubai-armani-3--696x521.png", description: "Starting at $120/night" },
+    { name: "Cozy Stay", price: 80, img: "https://cozy-stay-bali.ubudhotelsnow.com/data/Photos/700x500w/6863/686388/686388816.JPEG", description: "Starting at $80/night" },
+    { name: "Beach Resort", price: 150, img: "https://www.usnews.com/object/image/00000178-f4f5-d258-a5f9-fdf72e020000/lounge-area-restaurant.jpg?update-time=1725655129282&size=responsive640", description: "Starting at $150/night" }
   ]);
 
   const [sortOrder, setSortOrder] = useState("asc");

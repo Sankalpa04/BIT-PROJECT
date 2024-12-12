@@ -1,14 +1,29 @@
 // Login.js
 import React, { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here (e.g., API call)
-    console.log("Logging in:", { email, password });
+    setError(null); // Clear any previous errors
+
+    try {
+      // Replace with your actual backend endpoint
+      const response = await axios.post("http://localhost:5000/login", {
+        email,
+        password,
+      });
+
+      console.log("Login successful:", response.data);
+      // Perform actions after login (e.g., store token, redirect)
+    } catch (err) {
+      console.error("Login failed:", err.response?.data || err.message);
+      setError(err.response?.data?.message || "Login failed. Please try again.");
+    }
   };
 
   return (
@@ -16,7 +31,9 @@ const Login = () => {
       <h2 className="text-2xl font-bold mb-4 text-center">Log In</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700">Email</label>
+          <label htmlFor="email" className="block text-gray-700">
+            Email
+          </label>
           <input
             type="email"
             id="email"
@@ -28,7 +45,9 @@ const Login = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700">Password</label>
+          <label htmlFor="password" className="block text-gray-700">
+            Password
+          </label>
           <input
             type="password"
             id="password"
@@ -39,6 +58,10 @@ const Login = () => {
           />
         </div>
 
+        {error && (
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+        )}
+
         <button
           type="submit"
           className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
@@ -48,7 +71,9 @@ const Login = () => {
       </form>
       <p className="mt-4 text-center">
         Don't have an account?{" "}
-        <a href="/signup" className="text-blue-600">Sign Up</a>
+        <a href="/signup" className="text-blue-600">
+          Sign Up
+        </a>
       </p>
     </div>
   );

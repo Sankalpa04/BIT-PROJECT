@@ -57,7 +57,7 @@ const ContactPage = () => {
             {/* Images Section */}
             <div>
               <img
-                src="https://www.stars-hotelsupplies.com/wp-content/uploads/2022/04/2-7-430x430.jpeg"
+                src="https://media.cnn.com/api/v1/images/stellar/prod/140127103345-peninsula-shanghai-deluxe-mock-up.jpg?q=w_2226,h_1449,x_0,y_0,c_fill"
                 alt="Hotel Front"
                 className="h-[325px] rounded-lg shadow-md"
               />
