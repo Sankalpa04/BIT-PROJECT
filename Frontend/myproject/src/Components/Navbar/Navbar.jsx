@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../Assets/Logo.png'
 
 const Navbar = () => {
   return (
@@ -8,7 +9,7 @@ const Navbar = () => {
         {/* Logo Section */}
         <div className="flex items-center">
           <img
-            src="https://via.placeholder.com/50"
+            src={Logo}
             alt="Logo"
             className="h-12 w-12 rounded-full mr-3"
           />
@@ -23,15 +24,7 @@ const Navbar = () => {
 
         {/* Search and Signup Section */}
         <div className="flex items-center space-x-4">
-          {/* Search Bar */}
-          <input
-            type="text"
-            className="px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Search"
-          />
-          <button className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">
-            Search
-          </button>
+        
           {/* Signup Button */}
           <Link to='/signup'><button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500">
             Sign Up

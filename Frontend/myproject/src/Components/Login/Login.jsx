@@ -1,6 +1,7 @@
 // Login.js
 import React, { useState } from "react";
 import axios from "axios";
+import axiosInstance from "../../Config/axiosconfig";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,10 +14,10 @@ const Login = () => {
 
     try {
       // Replace with your actual backend endpoint
-      const response = await axios.post("http://localhost:5000/login", {
+      const response = await axiosInstance.post("/login", {
         email,
         password,
-      });
+      }); 
 
       console.log("Login successful:", response.data);
       // Perform actions after login (e.g., store token, redirect)
@@ -79,4 +80,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; 
