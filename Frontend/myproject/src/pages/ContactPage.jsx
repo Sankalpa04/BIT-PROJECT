@@ -19,7 +19,6 @@ const ContactPage = () => {
     formdata.append('name', formData.name);
     formdata.append('email', formData.email);
     formdata.append('message', formData.message);
-  
     try {
       const response = await axios.post("http://localhost:5000/contact",formdata,{
           headers: {

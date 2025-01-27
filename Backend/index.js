@@ -173,10 +173,14 @@ app.delete('/hotel/:id', async (req, res) => {
 app.post('/contact', async (req, res) => {
   try {
     console.log(req.body,'inside')
-    const { name, email, phone, message } = req.body;
-    const newContact = Contact.create({})
+    const { name, email, message } = req.body;
+    const newContact =await Contact.create({
+      name,
+      email,
+      message,
+    })
     console.log(newContact,'contacttt')
-
+    await newContact.save();
     res.status(200).json({ message: 'Contact form submitted successfully', data: newContact });
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
