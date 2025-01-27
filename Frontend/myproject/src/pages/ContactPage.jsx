@@ -26,12 +26,12 @@ const ContactPage = () => {
             "Content-Type": "application/json",
           },
         });
+        console.log(response,'response from contact')
 
-      const data = await response.json();
       if (response.ok) {
-        setResponseMessage(data.success);
+        setResponseMessage(response.success);
       } else {
-        setResponseMessage(data.error);
+        setResponseMessage(response.error);
       }
     } catch (error) {
       console.error("Error submitting the form:", error);
