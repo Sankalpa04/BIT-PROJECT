@@ -13,7 +13,7 @@ const ViewDetailsPage = () => {
   const [reviewText, setReviewText] = useState("");
   const [selectedDate, setSelectedDate] = useState('');
 
-  const stripePromise = loadStripe('sk_test_51P5lamRoqDgXi4MO0o7F0CCddhjcXN18vGkgdNYn6b67fn5rAkgoBo65Kkcx0fsh2MYeZLeY3vlYIaYRPEkAOR3U001P1pkojX'); 
+  const stripePromise = loadStripe('sk_test_51QklFkCvFE50DHP4sAtpAJyCeBYl76MxOzzeYddq4JsQfTinVv4s8uwjxlWmgKmeU53ZlMTKYIhpAWQu6FwZkxBw00rceua6Ti'); 
 
   // Fetch hotel data from the backend
   useEffect(() => {
@@ -69,7 +69,6 @@ const ViewDetailsPage = () => {
         id:id
       });
   
-
       // Get the Stripe session ID from the backend
       const { sessionId } = response.data;
       console.log(sessionId, "sessionId");

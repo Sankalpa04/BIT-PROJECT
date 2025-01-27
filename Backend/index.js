@@ -31,7 +31,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
 
-mongoose.connect('mongodb+srv://kismat:kismat@cluster0.mnlkha6.mongodb.net/bit', {
+mongoose.connect('mongodb://localhost:27017/OhoNepal', {
 }).then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -107,6 +107,15 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+  
+app.get('/user', async (req, res) => {
+  try {
+    const user = await User.find();
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 app.post('/hotel', upload.single('image'), async (req, res) => {
   try {
@@ -137,6 +146,7 @@ app.get('/hotel', async (req, res) => {
         ]
       };
     }
+
     const rooms = await Hotel.find(filter);
     res.status(200).json(rooms);
   } catch (error) {
@@ -224,7 +234,6 @@ app.get('/contact', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 app.post('/hotel/book', async (req, res) => {
   try {

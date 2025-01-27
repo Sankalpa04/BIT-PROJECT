@@ -117,6 +117,7 @@ const LandingPage = () => {
               />
               <div className="p-4">
                 <h5 className="text-xl font-semibold">{hotel.name}</h5>
+                <p className="text-gray-800 font-semilight mt-2">{hotel.address}</p>
                 <p className="text-gray-800 font-bold mt-2">${hotel.price}/night</p>
                 <Link to={`/hotel/${hotel._id}`}>
                   <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md">
