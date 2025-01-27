@@ -9,7 +9,14 @@ const dotenv = require('dotenv')
 const Hotel = require('./src/model/Hotel')
 const path = require('path');
 const Contact = require('./src/model/Contact')
+const Booking = require('./src/model/Booking')
+const sendEmail = require('./src/utils/email')
 dotenv.config()
+
+const stripe = require('stripe')
+const secretKey = process.env.SECRET_STRIPE_KEY;
+console.log(secretKey,'secret key')
+const stripeInstance = new stripe(secretKey);
 
 const app = express();
 
@@ -24,7 +31,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
 
-mongoose.connect('mongodb://localhost:27017/OhoNepal', {
+mongoose.connect('mongodb+srv://kismat:kismat@cluster0.mnlkha6.mongodb.net/bit', {
 }).then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -104,6 +111,7 @@ app.post('/login', async (req, res) => {
 app.post('/hotel', upload.single('image'), async (req, res) => {
   try {
     // const {  } = req.body;
+    console.log('inside hotel')
     const roomData = new Hotel({
       ...req.body,
       image: req.file ? `${req.file.filename}` : null,
@@ -118,7 +126,18 @@ app.post('/hotel', upload.single('image'), async (req, res) => {
 
 app.get('/hotel', async (req, res) => {
   try {
-    const rooms = await Hotel.find();
+    const { search } = req.query;
+    let filter = {};
+
+    if (search) {
+      filter = {
+        $or: [
+          { name: { $regex: search, $options: 'i' } }, // Case-insensitive search for hotel name
+          { location: { $regex: search, $options: 'i' } } // Case-insensitive search for location
+        ]
+      };
+    }
+    const rooms = await Hotel.find(filter);
     res.status(200).json(rooms);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -172,15 +191,24 @@ app.delete('/hotel/:id', async (req, res) => {
 
 app.post('/contact', async (req, res) => {
   try {
-    console.log(req.body,'inside')
-    const { name, email, message } = req.body;
-    const newContact =await Contact.create({
+    const data = req.body
+    const { name, email,message } = req.body;
+    console.log(req.body,'req.body')
+    const newContact = new Contact({
       name,
       email,
-      message,
+      message
     })
-    console.log(newContact,'contacttt')
-    await newContact.save();
+   await newContact.save()
+   console.log('success')
+   sendEmail({
+      to: email,
+      subject: 'New Contact Form Submission',
+      name:data.name,
+      message:data.message,
+      title:'Form submission',
+      template: 'contact',
+  }),
     res.status(200).json({ message: 'Contact form submitted successfully', data: newContact });
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
@@ -194,6 +222,60 @@ app.get('/contact', async (req, res) => {
     res.status(200).json(contacts);
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+app.post('/hotel/book', async (req, res) => {
+  try {
+    console.log(req.body,'body data')
+    const userId = '6796fd0c78b626b8cc9d36c6';
+    const { date, id } = req.body; // Get the booking date and userId from the request body
+
+    // Step 1: Fetch the hotel details from the database
+    const hotel = await Hotel.findById(id);
+    console.log(hotel,'hotel details')
+    if (!hotel) {
+      return res.status(404).send({ message: 'Hotel not found' });
+    }
+
+    // Step 2: Save the booking details in the database
+    const booking = new Booking({
+      hotelId: id,
+      userId,
+      bookingDates:date,
+    });
+    // await booking.save();
+
+  console.log('saved successfully')
+    // Step 3: Create a Stripe checkout session
+    const session = await stripeInstance.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd', // You can change this to your preferred currency
+            product_data: {
+              name: hotel.name,
+              description: hotel.description,
+              // price: hotel.price,
+              // offerPrice: hotel.offerPrice
+            },
+            unit_amount: hotel.offerPrice * 100, // Stripe requires amount in cents
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`, // Update this with your frontend success page URL
+      cancel_url: `http://localhost:5173/cancel`, // Update this with your frontend cancel page URL
+    });
+
+    // Step 4: Respond with the Stripe session ID
+    res.send({ sessionId: session.id });
+  } catch (error) {
+    console.error('Error booking hotel:', error);
+    res.status(500).send({ message: 'Error booking hotel' });
   }
 });
 

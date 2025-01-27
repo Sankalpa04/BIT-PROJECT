@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -7,12 +7,14 @@ const LandingPage = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [loading, setLoading] = useState(true); // To track data loading state
   const [error, setError] = useState(null); // To handle errors
+  const [search, setSearch] = useState(''); // Initialize with an empty search value
+  const [query, setQuery] = useState(''); // Initialize with an empty array
 
   // Fetch hotels from the backend
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/hotel"); // Replace with your backend endpoint
+        const response = await axios.get(`http://localhost:5000/hotel?search=${query}`); // Replace with your backend endpoint
         setHotelList(response.data); // Assuming the backend returns an array of hotels
         setLoading(false);
       } catch (err) {
@@ -21,8 +23,8 @@ const LandingPage = () => {
         setLoading(false);
       }
     };
-    fetchHotels();
-  }, []);
+    if (query || query === "") fetchHotels();
+  }, [query]);
 
   // Handle sorting
   const handleSortChange = (order) => {
@@ -31,6 +33,9 @@ const LandingPage = () => {
     );
     setHotelList(sortedHotels);
     setSortOrder(order);
+  };
+  const handleSearch = () => {
+    setQuery(search); // Set the `query` state to trigger the search
   };
 
   // Render loading, error, or content
@@ -63,11 +68,13 @@ const LandingPage = () => {
         <div className="mt-8 space-y-4">
           <input
             type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Destination"
             className="form-control px-4 py-2 w-full max-w-md mx-auto rounded-md shadow-lg text-black"
           />
           <div className="flex justify-center space-x-4 mt-4">
-            <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md">
+            <button onClick={handleSearch} className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md">
               Search
             </button>
           </div>
@@ -104,7 +111,7 @@ const LandingPage = () => {
               className="bg-white shadow-lg rounded-lg overflow-hidden"
             >
               <img
-                src={hotel.image || "https://via.placeholder.com/300"} // Fallback if no image
+                src={`http://localhost:5000/public/uploads/${hotel.image}`} // Fallback if no image
                 alt={hotel.name}
                 className="w-full h-48 object-cover"
               />

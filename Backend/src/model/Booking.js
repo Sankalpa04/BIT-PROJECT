@@ -1,24 +1,19 @@
 const mongoose = require('mongoose');
 
 const bookingSchema = new mongoose.Schema({
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to User model
     required: true,
   },
-  room: {
+  hotelId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Hotel', // Reference to Room model
     required: true,
   },
   bookingDates: {
-    type: [Date], // Array of booked dates
+    type: Date, // Array of booked dates
     required: true,
-  },
-  totalPrice: {
-    type: Number,
-    required: true,
-    min: 0,
   },
   status: {
     type: String,
