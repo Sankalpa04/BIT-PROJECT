@@ -44,6 +44,18 @@ const Sidebar = () => {
                         >
                             Hotel Lists
                         </NavLink>
+                    </li>                    
+                    <li>
+                        <NavLink
+                            to="/admin/users"
+                            className={({ isActive }) =>
+                                `block py-2 px-4 rounded-md hover:bg-gray-700 transition ${
+                                    isActive ? 'bg-gray-700' : ''
+                                }`
+                            }
+                        >
+                            Users Lists
+                        </NavLink>
                     </li>
                 </ul>
             </nav>

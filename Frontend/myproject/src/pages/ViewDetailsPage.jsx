@@ -79,7 +79,6 @@ const ViewDetailsPage = () => {
         },
       });
   
-
       // Get the Stripe session ID from the backend
       const { sessionId } = response.data;
       console.log(sessionId, "sessionId");

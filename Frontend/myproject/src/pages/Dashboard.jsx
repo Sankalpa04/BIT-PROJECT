@@ -4,10 +4,12 @@ import axios from 'axios';
 const Dashboard = () => {
     const [hotelCount, setHotelCount] = useState(0);
     const [bookingCount, setBookingCount] = useState(0);
+    const [userCount, setUserCount] = useState(0);
 
     useEffect(() => {
         fetchHotelCount();
         fetchBookingCount();
+        fetchUserCount();
     }, []);
 
     const fetchHotelCount = async () => {
@@ -26,6 +28,14 @@ const Dashboard = () => {
         } catch (error) {
             console.error('Error fetching booking count: ', error);
         }
+    };    
+    const fetchUserCount = async () => {
+        try {
+            const response = await axios.get('/api/user/count');
+            setUserCount(response.data.count);
+        } catch (error) {
+            console.error('Error fetching booking count: ', error);
+        }
     };
 
     return (
@@ -39,6 +49,10 @@ const Dashboard = () => {
                 <div className="p-6 bg-gray-100 rounded-lg shadow-lg flex flex-col items-center">
                     <h3 className="text-xl font-semibold text-gray-700">Total Bookings</h3>
                     <p className="text-4xl font-bold text-gray-800 mt-2">{bookingCount}</p>
+                </div>                
+                <div className="p-6 bg-gray-100 rounded-lg shadow-lg flex flex-col items-center">
+                    <h3 className="text-xl font-semibold text-gray-700">Total Users</h3>
+                    <p className="text-4xl font-bold text-gray-800 mt-2">{userCount}</p>
                 </div>
             </div>
         </div>

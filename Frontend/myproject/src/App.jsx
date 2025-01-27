@@ -14,6 +14,12 @@ import AdminLayout from './pages/AdminLayout.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import HotelLists from './pages/HotelLists.jsx'
 import AddHotelForm from './pages/AddHotelForm.jsx'
+import Admin from './pages/Admin.jsx'
+import UsersList from './pages/UsersLists.jsx'
+import BookingList from './pages/BookingLists.jsx'
+import SuccessfulPayment from './pages/SuccessfulPayment.jsx'
+import UnsuccessfulPayment from './pages/UnsuccessfulPayment.jsx'
+import UnauthorizedPage from './pages/UnauthorizedPage.jsx'
 
 const AdminRoute = () => {
   const token = localStorage.getItem('authToken'); // Get the token from localStorage
@@ -42,13 +48,14 @@ const AdminRoute = () => {
 function App() {
   return (
     <BrowserRouter>
-      <Navbar/> 
+      <Navbar/>
           <Routes>
-            <Route path='/' element={<LandingPage/>}/>  
+            <Route path='/' element={<LandingPage/>}/>
             <Route path='/login' element={<LoginPage/>}/>  
             <Route path='/signup' element={<SignupPage/>}/>
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/hotel/:id" element={<ViewDetailsPage/>} />
+<<<<<<< HEAD
             {/* <Route path="/admin" element={<AddPackageForm/>} /> */}
 
             <Route
@@ -64,6 +71,22 @@ function App() {
           <Route path="hotels" element={<HotelLists />} />
           <Route path="addhotel" element={<AddHotelForm />} />
         </Route>       
+=======
+            <Route path="/success?session_id={CHECKOUT_SESSION_ID}, // " element={<SuccessfulPayment/>} />
+            <Route path="/cancel" element={<UnsuccessfulPayment/>} />
+            <Route path="/unauthorized" element={<UnauthorizedPage/>} />
+            {/* <Route path="/admin" element={<Admin/>} /> */}
+            {/* <Route path="/admin" element={<Admin />}/> */}
+            <Route path="/admin/" element={<AdminLayout />}>
+              <Route index element={<Dashboard />} />  {/* Dashboard page */}
+              <Route path="dashboard" element={<Dashboard />} />  {/* Dashboard page */}
+              <Route path="bookings" element={<BookingList />} />  {/* Dashboard page */}
+              <Route path="hotels" element={<HotelLists />} />  {/* HotelLists page */}
+              <Route path="addhotel" element={<AddHotelForm />} />  {/* Bookings page */}
+              <Route path="users" element={<UsersList />} />  {/* Bookings page 
+              {/* You can add more admin pages here */}
+          </Route>        
+>>>>>>> a60ff9c4c506a406d67cab350b1fdc13b8840fec
           </Routes>
         <Footer/>
     </BrowserRouter>
