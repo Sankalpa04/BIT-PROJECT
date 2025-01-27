@@ -13,7 +13,7 @@ const ViewDetailsPage = () => {
   const [reviewText, setReviewText] = useState("");
   const [selectedDate, setSelectedDate] = useState('');
 
-  const stripePromise = loadStripe('sk_test_51P5lamRoqDgXi4MO0o7F0CCddhjcXN18vGkgdNYn6b67fn5rAkgoBo65Kkcx0fsh2MYeZLeY3vlYIaYRPEkAOR3U001P1pkojX'); 
+  const stripePromise = loadStripe('pk_test_51QklFkCvFE50DHP4BVOLOOTKPFhdpKbdSkkYcfAtEjNI2u1s1X2DSKf4DLesBGey7kV88hFfdmc28P1rdq777bTi00O7qOPqdY'); 
 
   // Fetch hotel data from the backend
   useEffect(() => {
@@ -61,12 +61,22 @@ const ViewDetailsPage = () => {
       alert('Please select a date!');
       return;
     }
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      alert("You must log in to book!");
+      return;
+    }
 
     try {
       // Send booking data to the backend
       const response = await axios.post(`http://localhost:5000/hotel/book`, {
         date: selectedDate,
         id:id
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
       });
   
 

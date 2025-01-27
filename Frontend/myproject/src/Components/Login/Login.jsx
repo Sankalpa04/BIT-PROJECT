@@ -17,9 +17,16 @@ const Login = () => {
       const response = await axiosInstance.post("/login", {
         email,
         password,
-      }); 
-
+      });
       console.log("Login successful:", response.data);
+      if(response.data.data.token){
+        localStorage.setItem("authToken", response.data.data.token);
+      }
+      if(response.data.data.role === 'admin'){
+        window.location.href = "/admin";
+      } else {
+        window.location.href = "/";
+      }
       // Perform actions after login (e.g., store token, redirect)
     } catch (err) {
       console.error("Login failed:", err.response?.data || err.message);

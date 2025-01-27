@@ -96,12 +96,19 @@ app.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { userId: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '1h' } 
     );
+    const data = {
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token
+    }
+    
 
-    res.status(200).json({ message: 'Login successful', token });
+    res.status(200).json({ message: 'Login successful',data});
   } catch (err) {
     console.error('Error during login:', err);
     res.status(500).json({ message: 'Internal server error' });
@@ -245,7 +252,7 @@ app.post('/hotel/book', async (req, res) => {
       userId,
       bookingDates:date,
     });
-    // await booking.save();
+    await booking.save();
 
   console.log('saved successfully')
     // Step 3: Create a Stripe checkout session

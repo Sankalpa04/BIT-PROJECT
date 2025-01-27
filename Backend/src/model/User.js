@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6, // Minimum length for password
   },
+  role: {
+    type: String,
+    enum: ['user', 'admin'], 
+    default: 'user', 
+  }
 }, { timestamps: true }); // Add createdAt and updatedAt fields automatically
 
 // Create and export the User model
